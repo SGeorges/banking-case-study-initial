@@ -53,4 +53,8 @@ public class DepositService {
             return false;
         }
     }
+
+    public boolean databaseCheck() {
+        return this.repository.findAll().isEmpty();
+    }
 }

@@ -1,4 +1,9 @@
 # Banking Case Study
+*Stefano Georges (2000574)
+*Microservices AutoLoanApplication, CreditCardApplication, and DepositApplication were completed with the exception of adding a hystrix. Instead a default message was added via a class in the instance a database was empty. Began working on the orchestrator service when ran short on time.
+
+*Complications came with the initial set-up. Upon generating my getters/setters for my AutoLoan.class the values were primitive int types even though it was set to wrapper class Integer type. It was an oversight which took a significant amount of time to catch since the error was believed to have been a result of JSONInclude.
+*I believe I got caught up with the order of completion as identified on the Readme as opposed to jumping around between the Orchestrator and the various microservices. 
 
 You're going to create a banking application.  The banking application has the following lines of business (LoBs):
 

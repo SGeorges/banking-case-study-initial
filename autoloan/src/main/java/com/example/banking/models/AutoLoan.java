@@ -1,8 +1,11 @@
 package com.example.banking.models;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 public class AutoLoan {
 
@@ -24,11 +27,17 @@ public class AutoLoan {
         this.balance = balance;
     }
 
-    public int getId() {
+    public AutoLoan ( NewAutoLoan newAutoLoan ) {
+        this.clientId = newAutoLoan.getClientId();
+        this.name = newAutoLoan.getName();
+        this.balance = newAutoLoan.getBalance();
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

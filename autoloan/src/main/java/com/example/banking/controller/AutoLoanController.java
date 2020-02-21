@@ -1,17 +1,21 @@
 package com.example.banking.controller;
 
 import com.example.banking.models.AutoLoan;
+import com.example.banking.models.NewAutoLoan;
+import com.example.banking.models.UpdateAutoLoan;
 import com.example.banking.service.AutoLoanService;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/autoloan")
 public class AutoLoanController {
 
     private AutoLoanService service;
-    private HttpStatus status;
 
     public AutoLoanController(AutoLoanService service) {
         this.service = service;
@@ -19,31 +23,35 @@ public class AutoLoanController {
 
     // Create
     @PostMapping(value = "/createLoan", produces = "application/json")
-    public AutoLoan createLoan(@RequestBody AutoLoan newAutoLoan) {
-        return this.service.add(newAutoLoan);
+    public ResponseEntity<AutoLoan> createLoan(@RequestBody NewAutoLoan newAutoLoan) {
+        return new ResponseEntity(this.service.add(newAutoLoan), HttpStatus.valueOf(200));
     }
 
     // Read
     @GetMapping(value = "/getLoansByClientId/{clientId}", produces = "application/json")
-    public String getLoansByClientId(@PathVariable("clientId") int clientId) {
-        return "GetLoansByClientId successful " + clientId;
+    public ResponseEntity<List<AutoLoan>> getLoansByClientId(@PathVariable("clientId") int clientId) {
+        return new ResponseEntity(this.service.getLoansByClientId(clientId), HttpStatus.valueOf(200));
     }
 
     // Read All
     @GetMapping(value = "/getAllLoans", produces = "application/json")
-    public String getAllLoans() {
-        return "GetAllLoans successful";
+    public ResponseEntity<List<AutoLoan>> getAllLoans() {
+        return new ResponseEntity(this.service.getAllLoans(), HttpStatus.valueOf(200));
     }
 
     // Update
-    @PostMapping(value = "/updateLoan/{id}", produces = "application/json")
-    public String updateLoan(@PathVariable("id") int id) {
-        return "UpdateLoan successful " + id;
+    @PutMapping(value = "/updateLoan/{id}", produces = "application/json")
+    public ResponseEntity<AutoLoan> updateLoan(@PathVariable("id") int id, @RequestBody UpdateAutoLoan updateAutoLoan) {
+        return new ResponseEntity(this.service.updateLoan(id, updateAutoLoan), HttpStatus.valueOf(200));
     }
 
     // Delete
     @DeleteMapping(value = "/deleteLoan/{id}", produces = "application/json")
-    public String deleteLoan(@PathVariable("id") int id) {
-        return "DeleteLoan successful " + id;
+    public ResponseEntity<Boolean> deleteLoan(@PathVariable("id") int id) {
+        if(this.service.delete(id)) {
+            return new ResponseEntity(HttpStatus.valueOf(200));
+        } else {
+            return new ResponseEntity("Record not deleted", HttpStatus.valueOf(404));
+        }
     }
 }

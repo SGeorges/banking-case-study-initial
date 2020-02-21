@@ -1,6 +1,9 @@
 package com.example.banking.controller;
 
+import com.example.banking.models.AutoLoan;
 import com.example.banking.service.AutoLoanService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class AutoLoanController {
 
     private AutoLoanService service;
+    private HttpStatus status;
 
     public AutoLoanController(AutoLoanService service) {
         this.service = service;
@@ -15,8 +19,8 @@ public class AutoLoanController {
 
     // Create
     @PostMapping(value = "/createLoan", produces = "application/json")
-    public String createLoan(@RequestBody String information) {
-        return "CreateLoan successful.";
+    public AutoLoan createLoan(@RequestBody AutoLoan newAutoLoan) {
+        return this.service.add(newAutoLoan);
     }
 
     // Read

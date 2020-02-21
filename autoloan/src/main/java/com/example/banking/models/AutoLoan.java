@@ -19,7 +19,7 @@ public class AutoLoan {
     public AutoLoan() {
     }
 
-    public AutoLoan( int id, int clientId, String name, double balance) {
+    public AutoLoan( Integer id, int clientId, String name, double balance) {
         super();
         this.id = id;
         this.clientId = clientId;

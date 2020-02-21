@@ -1,10 +1,7 @@
 package com.example.banking.controller;
 
 import com.example.banking.models.AutoLoan;
-import com.example.banking.models.NewAutoLoan;
-import com.example.banking.models.UpdateAutoLoan;
 import com.example.banking.service.AutoLoanService;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +20,7 @@ public class AutoLoanController {
 
     // Create
     @PostMapping(value = "/createLoan", produces = "application/json")
-    public ResponseEntity<AutoLoan> createLoan(@RequestBody NewAutoLoan newAutoLoan) {
+    public ResponseEntity<AutoLoan> createLoan(@RequestBody AutoLoan newAutoLoan) {
         return new ResponseEntity(this.service.add(newAutoLoan), HttpStatus.valueOf(200));
     }
 
@@ -41,7 +38,7 @@ public class AutoLoanController {
 
     // Update
     @PutMapping(value = "/updateLoan/{id}", produces = "application/json")
-    public ResponseEntity<AutoLoan> updateLoan(@PathVariable("id") int id, @RequestBody UpdateAutoLoan updateAutoLoan) {
+    public ResponseEntity<AutoLoan> updateLoan(@PathVariable("id") int id, @RequestBody AutoLoan updateAutoLoan) {
         return new ResponseEntity(this.service.updateLoan(id, updateAutoLoan), HttpStatus.valueOf(200));
     }
 

@@ -27,12 +27,6 @@ public class AutoLoan {
         this.balance = balance;
     }
 
-    public AutoLoan ( NewAutoLoan newAutoLoan ) {
-        this.clientId = newAutoLoan.getClientId();
-        this.name = newAutoLoan.getName();
-        this.balance = newAutoLoan.getBalance();
-    }
-
     public Integer getId() {
         return id;
     }

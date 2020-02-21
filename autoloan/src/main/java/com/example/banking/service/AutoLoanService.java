@@ -1,8 +1,6 @@
 package com.example.banking.service;
 
 import com.example.banking.models.AutoLoan;
-import com.example.banking.models.NewAutoLoan;
-import com.example.banking.models.UpdateAutoLoan;
 import com.example.banking.repository.AutoLoanRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +15,8 @@ public class AutoLoanService {
         this.repository = repository;
     }
 
-    public AutoLoan add(NewAutoLoan newAutoLoan) {
-        return this.repository.save(new AutoLoan(newAutoLoan));
+    public AutoLoan add(AutoLoan newAutoLoan) {
+        return this.repository.save(newAutoLoan);
     }
 
     public List<AutoLoan> getLoansByClientId(int clientId) {
@@ -29,7 +27,7 @@ public class AutoLoanService {
         return this.repository.findAll();
     }
 
-    public AutoLoan updateLoan(int id, UpdateAutoLoan updateAutoLoan) {
+    public AutoLoan updateLoan(int id, AutoLoan updateAutoLoan) {
 
         AutoLoan autoLoan = repository.findById(id).get();
                  autoLoan.setClientId(updateAutoLoan.getClientId());

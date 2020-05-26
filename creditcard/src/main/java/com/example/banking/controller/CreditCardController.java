@@ -1,5 +1,6 @@
 package com.example.banking.controller;
 
+import com.example.banking.dtos.CreditCardDTO;
 import com.example.banking.models.CreditCard;
 import com.example.banking.models.DefaultMessage;
 import com.example.banking.service.CreditCardService;
@@ -21,29 +22,29 @@ public class CreditCardController {
 
     // Create
     @PostMapping(value = "/createCreditCard", produces = "application/json")
-    public ResponseEntity<CreditCard> createCreditCard(@RequestBody CreditCard newCreditCard) {
-        return new ResponseEntity(this.service.add(newCreditCard), HttpStatus.valueOf(200));
+    public ResponseEntity<CreditCardDTO> createCreditCard(@RequestBody CreditCard newCreditCard) {
+        return new ResponseEntity<CreditCardDTO>(this.service.add(newCreditCard), HttpStatus.valueOf(200));
     }
 
     // Read
     @GetMapping(value = "/getCreditCardsByClientId/{clientId}", produces = "application/json")
-    public ResponseEntity<List<CreditCard>> getCreditCardsByClientId(@PathVariable("clientId") int clientId) {
+    public ResponseEntity<List<CreditCardDTO>> getCreditCardsByClientId(@PathVariable("clientId") int clientId) {
         if (this.service.databaseCheck()) { return new ResponseEntity(new DefaultMessage(), HttpStatus.NOT_FOUND); }
-        return new ResponseEntity(this.service.getCreditCardsByClientId(clientId), HttpStatus.valueOf(200));
+        return new ResponseEntity<List<CreditCardDTO>>(this.service.getCreditCardsByClientId(clientId), HttpStatus.valueOf(200));
     }
 
     // Read All
     @GetMapping(value = "/getAllCreditCards", produces = "application/json")
-    public ResponseEntity<List<CreditCard>> getAllCreditCards() {
+    public ResponseEntity<List<CreditCardDTO>> getAllCreditCards() {
         if (this.service.databaseCheck()) { return new ResponseEntity(new DefaultMessage(), HttpStatus.NOT_FOUND); }
-        return new ResponseEntity(this.service.getAllCreditCards(), HttpStatus.valueOf(200));
+        return new ResponseEntity<List<CreditCardDTO>>(this.service.getAllCreditCards(), HttpStatus.valueOf(200));
     }
 
     // Update
     @PutMapping(value = "/updateCreditCard/{id}", produces = "application/json")
-    public ResponseEntity<CreditCard> updateCreditCard(@PathVariable("id") int id, @RequestBody CreditCard updateCreditCard) {
+    public ResponseEntity<CreditCardDTO> updateCreditCard(@PathVariable("id") int id, @RequestBody CreditCard updateCreditCard) {
         if (this.service.databaseCheck()) { return new ResponseEntity(new DefaultMessage(), HttpStatus.NOT_FOUND); }
-        return new ResponseEntity(this.service.updateCreditCard(id, updateCreditCard), HttpStatus.valueOf(200));
+        return new ResponseEntity<CreditCardDTO>(this.service.updateCreditCard(id, updateCreditCard), HttpStatus.valueOf(200));
     }
 
     // Delete
@@ -51,7 +52,7 @@ public class CreditCardController {
     public ResponseEntity<Boolean> deleteCreditCard(@PathVariable("id") int id) {
         if (this.service.databaseCheck()) { return new ResponseEntity(new DefaultMessage(), HttpStatus.NOT_FOUND); }
         if(this.service.delete(id)) {
-            return new ResponseEntity(HttpStatus.valueOf(200));
+            return new ResponseEntity(HttpStatus.valueOf(204));
         } else {
             return new ResponseEntity("Record not deleted", HttpStatus.valueOf(404));
         }

@@ -1,9 +1,11 @@
 package com.example.banking.service;
 
+import com.example.banking.dtos.CreditCardDTO;
 import com.example.banking.models.CreditCard;
 import com.example.banking.repository.CreditCardRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,28 +17,48 @@ public class CreditCardService {
         this.repository = repository;
     }
 
-    public CreditCard add(CreditCard newCreditCard) {
-        return this.repository.save(newCreditCard);
+    // Create
+    public CreditCardDTO add(CreditCard newCreditCard) {
+        CreditCard creditCard = this.repository.save(newCreditCard);
+
+        return CreditCardDTO.builder().withId(creditCard.getId()).withClientId(creditCard.getClientId()).withNumber(creditCard.getNumber()).withName(creditCard.getName()).withBalance(creditCard.getBalance()).build();
     }
 
-    public List<CreditCard> getCreditCardsByClientId(int clientId) {
-        return this.repository.findCreditCardByClientId(clientId);
+    // Read
+    public List<CreditCardDTO> getCreditCardsByClientId(int clientId) {
+        List<CreditCard> creditCardList = this.repository.findCreditCardByClientId(clientId);
+        List<CreditCardDTO> returnList = new ArrayList<>();
+
+        for(CreditCard creditCard : creditCardList)
+            returnList.add(CreditCardDTO.builder().withId(creditCard.getId()).withClientId(creditCard.getClientId()).withNumber(creditCard.getNumber()).withName(creditCard.getName()).withBalance(creditCard.getBalance()).build());
+
+        return returnList;
     }
 
-    public List<CreditCard> getAllCreditCards() {
-        return this.repository.findAll();
+    // Read All
+    public List<CreditCardDTO> getAllCreditCards() {
+        List<CreditCard> creditCardList = this.repository.findAll();
+        List<CreditCardDTO> returnList = new ArrayList<>();
+
+        for(CreditCard creditCard : creditCardList)
+            returnList.add(CreditCardDTO.builder().withId(creditCard.getId()).withClientId(creditCard.getClientId()).withNumber(creditCard.getNumber()).withName(creditCard.getName()).withBalance(creditCard.getBalance()).build());
+
+        return returnList;
     }
 
-    public CreditCard updateCreditCard(int id, CreditCard updateCreditCard) {
-
+    // Update
+    public CreditCardDTO updateCreditCard(int id, CreditCard updateCreditCard) {
         CreditCard creditCard = repository.findById(id).get();
                    creditCard.setClientId(updateCreditCard.getClientId());
                    creditCard.setNumber(updateCreditCard.getNumber());
                    creditCard.setName(updateCreditCard.getName());
 
-        return this.repository.save(creditCard);
+        this.repository.save(creditCard);
+
+        return CreditCardDTO.builder().withId(creditCard.getId()).withClientId(creditCard.getClientId()).withNumber(creditCard.getNumber()).withName(creditCard.getName()).withBalance(creditCard.getBalance()).build();
     }
 
+    // Delete
     public boolean delete(int id) {
         try {
             this.repository.deleteById(id);

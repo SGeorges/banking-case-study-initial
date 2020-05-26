@@ -1,9 +1,11 @@
 package com.example.banking.service;
 
+import com.example.banking.dtos.AutoLoanDTO;
 import com.example.banking.models.AutoLoan;
 import com.example.banking.repository.AutoLoanRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,26 +17,41 @@ public class AutoLoanService {
         this.repository = repository;
     }
 
-    public AutoLoan add(AutoLoan newAutoLoan) {
-        return this.repository.save(newAutoLoan);
+    public AutoLoanDTO add(AutoLoan newAutoLoan) {
+        AutoLoan autoLoan = this.repository.save(newAutoLoan);
+
+        return AutoLoanDTO.builder().withId(autoLoan.getId()).withClientId(autoLoan.getClientId()).withName(autoLoan.getName()).withBalance(autoLoan.getBalance()).build();
     }
 
-    public List<AutoLoan> getLoansByClientId(int clientId) {
-        return this.repository.findAutoLoanByClientId(clientId);
+    public List<AutoLoanDTO> getLoansByClientId(int clientId) {
+        List<AutoLoan> autoLoanList = this.repository.findAutoLoanByClientId(clientId);
+        List<AutoLoanDTO> returnList = new ArrayList<AutoLoanDTO>();
+
+        for(AutoLoan autoLoan : autoLoanList)
+            returnList.add(AutoLoanDTO.builder().withId(autoLoan.getId()).withClientId(autoLoan.getClientId()).withName(autoLoan.getName()).withBalance(autoLoan.getBalance()).build());
+
+        return returnList;
     }
 
-    public List<AutoLoan> getAllLoans() {
-        return this.repository.findAll();
+    public List<AutoLoanDTO> getAllLoans() {
+        List<AutoLoan> autoLoanList = this.repository.findAll();
+        List<AutoLoanDTO> returnList = new ArrayList<AutoLoanDTO>();
+
+        for(AutoLoan autoLoan : autoLoanList)
+            returnList.add(AutoLoanDTO.builder().withId(autoLoan.getId()).withClientId(autoLoan.getClientId()).withName(autoLoan.getName()).withBalance(autoLoan.getBalance()).build());
+
+        return returnList;
     }
 
-    public AutoLoan updateLoan(int id, AutoLoan updateAutoLoan) {
+    public AutoLoanDTO updateLoan(int id, AutoLoan updateAutoLoan) {
 
         AutoLoan autoLoan = repository.findById(id).get();
                  autoLoan.setClientId(updateAutoLoan.getClientId());
                  autoLoan.setName(updateAutoLoan.getName());
 
-        return this.repository.save(autoLoan);
+        this.repository.save(autoLoan);
 
+        return AutoLoanDTO.builder().withId(autoLoan.getId()).withClientId(autoLoan.getClientId()).withName(autoLoan.getName()).withBalance(autoLoan.getBalance()).build();
     }
 
     public boolean delete(int id) {

@@ -68,35 +68,4 @@ public class AutoLoan {
                 ", balance=" + balance +
                 '}';
     }
-
-    //Builder pattern using static builder
-    public static AutoLoanBuilder builder() { return new AutoLoanBuilder(); }
-
-    public static final class AutoLoanBuilder {
-        private AutoLoan autoLoan;
-
-        private AutoLoanBuilder() { autoLoan = new AutoLoan(); }
-
-        public AutoLoanBuilder withId( Integer id) {
-            autoLoan.setId(id);
-            return this;
-        }
-
-        public AutoLoanBuilder withClientId( int clientId ) {
-            autoLoan.setClientId(clientId);
-            return this;
-        }
-
-        public AutoLoanBuilder withName( String name ) {
-            autoLoan.setName(name);
-            return this;
-        }
-
-        public AutoLoanBuilder withBalance( double balance ) {
-            autoLoan.setBalance(balance);
-            return this;
-        }
-
-        public AutoLoan build() { return autoLoan; }
-    }
 }

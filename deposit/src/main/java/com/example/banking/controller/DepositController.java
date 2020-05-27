@@ -1,5 +1,6 @@
 package com.example.banking.controller;
 
+import com.example.banking.dtos.DepositDTO;
 import com.example.banking.models.DefaultMessage;
 import com.example.banking.models.Deposit;
 import com.example.banking.models.NewDepositAccount;
@@ -22,22 +23,22 @@ public class DepositController {
 
     // Create
     @PostMapping(value = "/createDepositAccount", produces = "application/json")
-    public ResponseEntity<Deposit> createDepositAccount(@RequestBody NewDepositAccount newDeposit) {
-        return new ResponseEntity(this.service.add(newDeposit), HttpStatus.valueOf(200));
+    public ResponseEntity<DepositDTO> createDepositAccount(@RequestBody NewDepositAccount newDeposit) {
+        return new ResponseEntity<DepositDTO>(this.service.add(newDeposit), HttpStatus.valueOf(200));
     }
 
     // Read
     @GetMapping(value = "/getDepositAccountsByClientId/{clientId}", produces = "application/json")
-    public ResponseEntity<List<Deposit>> getDepositAccountsByClientId(@PathVariable("clientId") int clientId) {
+    public ResponseEntity<List<DepositDTO>> getDepositAccountsByClientId(@PathVariable("clientId") int clientId) {
         if (this.service.databaseCheck()) { return new ResponseEntity(new DefaultMessage(), HttpStatus.NOT_FOUND); }
-        return new ResponseEntity(this.service.getDepositAccountsByClientId(clientId), HttpStatus.valueOf(200));
+        return new ResponseEntity<List<DepositDTO>>(this.service.getDepositAccountsByClientId(clientId), HttpStatus.valueOf(200));
     }
 
     // Read All
     @GetMapping(value = "/getAllDepositAccounts", produces = "application/json")
-    public ResponseEntity<List<Deposit>> getAllDepositAccounts() {
+    public ResponseEntity<List<DepositDTO>> getAllDepositAccounts() {
         if (this.service.databaseCheck()) { return new ResponseEntity(new DefaultMessage(), HttpStatus.NOT_FOUND); }
-        return new ResponseEntity(this.service.getAllDepositAccounts(), HttpStatus.valueOf(200));
+        return new ResponseEntity<List<DepositDTO>>(this.service.getAllDepositAccounts(), HttpStatus.valueOf(200));
     }
 
     // Update
@@ -52,7 +53,7 @@ public class DepositController {
     public ResponseEntity<Boolean> deleteDepositAccount(@PathVariable("id") int id) {
         if (this.service.databaseCheck()) { return new ResponseEntity(new DefaultMessage(), HttpStatus.NOT_FOUND); }
         if(this.service.delete(id)) {
-            return new ResponseEntity(HttpStatus.valueOf(200));
+            return new ResponseEntity(HttpStatus.valueOf(204));
         } else {
             return new ResponseEntity("Record not deleted", HttpStatus.valueOf(404));
         }

@@ -1,16 +1,25 @@
 package com.example.banking.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DepositAccount {
-    private Integer id;
-    private int clientId;
+    private String id;
+    private String clientId;
     private String accountNumber;
     private String name;
-    private double balance;
+    private String balance;
+
+    private String defaultMessage;
 
     public DepositAccount() {
     }
 
-    public DepositAccount(Integer id, int clientId, String accountNumber, String name, double balance) {
+    public DepositAccount(String defaultMessage) {
+        this.defaultMessage = defaultMessage;
+    }
+
+    public DepositAccount(String id, String clientId, String accountNumber, String name, String balance) {
         this.id = id;
         this.clientId = clientId;
         this.accountNumber = accountNumber;
@@ -18,19 +27,19 @@ public class DepositAccount {
         this.balance = balance;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getClientId() {
+    public String getClientId() {
         return clientId;
     }
 
-    public void setClientId(int clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 
@@ -50,22 +59,30 @@ public class DepositAccount {
         this.name = name;
     }
 
-    public double getBalance() {
+    public String getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(String balance) {
         this.balance = balance;
+    }
+
+    public String getDefaultMessage() {
+        return defaultMessage;
+    }
+
+    public void setDefaultMessage(String defaultMessage) {
+        this.defaultMessage = defaultMessage;
     }
 
     @Override
     public String toString() {
         return "DepositAccount{" +
-                "id=" + id +
-                ", clientId=" + clientId +
+                "id='" + id + '\'' +
+                ", clientId='" + clientId + '\'' +
                 ", accountNumber='" + accountNumber + '\'' +
                 ", name='" + name + '\'' +
-                ", balance=" + balance +
+                ", balance='" + balance + '\'' +
                 '}';
     }
 }

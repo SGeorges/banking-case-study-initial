@@ -1,46 +1,55 @@
 package com.example.banking.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CreditAccount {
 
-    private Integer id;
-    private int clientId;
-    private String accountNumber;
+    private String id;
+    private String clientId;
+    private String number;
     private String name;
-    private double balance;
+    private String balance;
+
+    private String defaultMessage;
 
     public CreditAccount() {
     }
 
-    public CreditAccount(Integer id, int clientId, String accountNumber, String name, double balance) {
+    public CreditAccount(String defaultMessage) {
+        this.defaultMessage = defaultMessage;
+    }
+
+    public CreditAccount(String id, String clientId, String number, String name, String balance) {
         this.id = id;
         this.clientId = clientId;
-        this.accountNumber = accountNumber;
+        this.number = number;
         this.name = name;
         this.balance = balance;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getClientId() {
+    public String getClientId() {
         return clientId;
     }
 
-    public void setClientId(int clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 
-    public String getAccountNumber() {
-        return accountNumber;
+    public String getNumber() {
+        return number;
     }
 
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getName() {
@@ -51,22 +60,30 @@ public class CreditAccount {
         this.name = name;
     }
 
-    public double getBalance() {
+    public String getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(String balance) {
         this.balance = balance;
+    }
+
+    public String getDefaultMessage() {
+        return defaultMessage;
+    }
+
+    public void setDefaultMessage(String defaultMessage) {
+        this.defaultMessage = defaultMessage;
     }
 
     @Override
     public String toString() {
         return "CreditAccount{" +
-                "id=" + id +
-                ", clientId=" + clientId +
-                ", accountNumber='" + accountNumber + '\'' +
+                "id='" + id + '\'' +
+                ", clientId='" + clientId + '\'' +
+                ", number='" + number + '\'' +
                 ", name='" + name + '\'' +
-                ", balance=" + balance +
+                ", balance='" + balance + '\'' +
                 '}';
     }
 }

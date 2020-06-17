@@ -1,35 +1,44 @@
 package com.example.banking.models;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AutoLoanAccount {
 
-    private Integer id;
-    private int clientId;
+    private String id;
+    private String clientId;
     private String name;
-    private double balanace;
+    private String balance;
+
+    private String defaultMessage;
 
     public AutoLoanAccount() {
     }
 
-    public AutoLoanAccount(Integer id, int clientId, String name, double balanace) {
+    public AutoLoanAccount(String defaultMessage) {
+        this.defaultMessage = defaultMessage;
+    }
+
+    public AutoLoanAccount(String id, String clientId, String name, String balance) {
         this.id = id;
         this.clientId = clientId;
         this.name = name;
-        this.balanace = balanace;
+        this.balance = balance;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getClientId() {
+    public String getClientId() {
         return clientId;
     }
 
-    public void setClientId(int clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 
@@ -41,21 +50,29 @@ public class AutoLoanAccount {
         this.name = name;
     }
 
-    public double getBalanace() {
-        return balanace;
+    public String getBalance() {
+        return balance;
     }
 
-    public void setBalanace(double balanace) {
-        this.balanace = balanace;
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public String getDefaultMessage() {
+        return defaultMessage;
+    }
+
+    public void setDefaultMessage(String defaultMessage) {
+        this.defaultMessage = defaultMessage;
     }
 
     @Override
     public String toString() {
         return "AutoLoanAccount{" +
-                "id=" + id +
-                ", clientId=" + clientId +
+                "id='" + id + '\'' +
+                ", clientId='" + clientId + '\'' +
                 ", name='" + name + '\'' +
-                ", balanace=" + balanace +
+                ", balance='" + balance + '\'' +
                 '}';
     }
 }
